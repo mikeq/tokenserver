@@ -1,0 +1,41 @@
+{
+  "name": "tokenserver",
+  "version": "1.0.0",
+  "description": "Express server for issuing and verifying JWT tokens",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikeq/tokenserver.git"
+  },
+  "author": "Mike Quinn <token@mikequinn.xyz>",
+  "license": "MIT",
+  "bin": "./server.js",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "clipboardy": "^1.2.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
+    "jsonwebtoken": "^8.5.0",
+    "mongodb": "^3.1.13"
+  },
+  "devDependencies": {
+    "@oakheart/ps-tools": "^1.0.7",
+    "nodemon": "^1.18.10"
+  },
+  "scripts": {
+    "precommit": "lint-staged",
+    "eslint_check": "eslint --print-config .eslintrc.json | eslint-config-prettier-check",
+    "prettier": "prettier --write *.{js,jsx,json,css,md}",
+    "lint": "eslint --color .",
+    "start": "nodemon",
+    "test": "jest"
+  },
+  "lint-staged": {
+    "*.{js,jsx,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
