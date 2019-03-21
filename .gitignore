@@ -59,3 +59,6 @@ typings/
 
 # next.js build output
 .next
+
+pm2.json
+docker-compose.yml

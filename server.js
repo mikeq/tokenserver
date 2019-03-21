@@ -44,6 +44,7 @@ app.post('/token', async (req, res) => {
     } else if (/JSON/g.test(err.message)) {
       res.status(500).json({ status: 'payload is not valid JSON' });
     } else {
+      console.error(err);
       res.status(500).json({ status: 'unknown error occurred' });
     }
   }

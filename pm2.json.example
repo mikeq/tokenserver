@@ -1,0 +1,15 @@
+{
+  "name": "tokenserver",
+  "script": "./server.js",
+  "instances": "1",
+  "env": {
+    "NODE_ENV": "development",
+    "MONGO_URL": "mongodb://localhost:27017",
+    "TOKEN_ISSUER": "token.issuer.local"
+  },
+  "env_production": {
+    "NODE_ENV": "production",
+    "MONGO_URL": "mongodb://localhost:27017",
+    "TOKEN_ISSUER": "token.issuer.local"
+  }
+}

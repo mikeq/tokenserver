@@ -1,0 +1,8 @@
+node_modules
+.git
+.eslintrc.json
+.gitlab-ci.yml
+.prettierrc
+.gitignore
+Dockerfile*
+.dockerignore
