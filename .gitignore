@@ -62,3 +62,5 @@ typings/
 
 pm2.json
 docker-compose.yml
+revoke.js
+docker-compose-local.yml  

@@ -37,6 +37,7 @@ app.post('/token', async (req, res) => {
         : JSON.parse(payload);
 
     const jwt = await token.generate(client_id, client_secret, data, expiry);
+
     res.json({ status: 'ok', token: jwt });
   } catch (err) {
     if (/client/gi.test(err.message)) {
