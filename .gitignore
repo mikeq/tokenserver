@@ -61,6 +61,5 @@ typings/
 .next
 
 pm2.json
-docker-compose.yml
+docker-compose*
 revoke.js
-docker-compose-local.yml  
