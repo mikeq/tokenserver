@@ -41,7 +41,7 @@ app.post('/token', async (req, res) => {
     res.json({ token: jwt });
   } catch (err) {
     if (/client/gi.test(err.message)) {
-      res.status(500).json({ statusCode: 500, message: 'client not found' });
+      res.status(500).json({ statusCode: 500, message: 'No record found' });
     } else if (/JSON/g.test(err.message)) {
       res
         .status(500)
@@ -62,15 +62,15 @@ app.post('/verify', async (req, res) => {
     if (valid) {
       res.json({ success: true, message: 'Valid Token' });
     } else {
-      res.status(403).json({ success: false, message: 'Invalid Token' });
+      res.status(403).json({ statusCode: 403, message: 'Invalid Token' });
     }
   } catch (err) {
     if (/client/gi.test(err.message)) {
-      res.status(403).json({ success: false, message: 'Invalid Token' });
+      res.status(403).json({ statusCode: 403, message: 'Invalid Token' });
     } else if (/expired/gi.test(err.message)) {
-      res.status(400).json({ success: false, message: 'Token Expired' });
+      res.status(400).json({ statusCode: 400, message: 'Token Expired' });
     } else {
-      res.status(403).json({ success: false, message: 'Invalid Token' });
+      res.status(403).json({ statusCode: 403, message: 'Invalid Token' });
     }
   }
 });
