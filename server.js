@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 const port = process.env.TOKEN_SERVER_PORT || '3005';
 
 app.get('/', (req, res) => {
-  res.send('Hello World!!');
+  res.send('JWT Token Server');
 });
 
 app.post('/token', async (req, res) => {
@@ -38,15 +38,19 @@ app.post('/token', async (req, res) => {
 
     const jwt = await token.generate(client_id, client_secret, data, expiry);
 
-    res.json({ status: 'ok', token: jwt });
+    res.json({ token: jwt });
   } catch (err) {
     if (/client/gi.test(err.message)) {
-      res.status(404).json({ status: 'client not found' });
+      res.status(500).json({ statusCode: 500, message: 'No record found' });
     } else if (/JSON/g.test(err.message)) {
-      res.status(500).json({ status: 'payload is not valid JSON' });
+      res
+        .status(500)
+        .json({ statusCode: 500, message: 'payload is not valid JSON' });
     } else {
       console.error(err);
-      res.status(500).json({ status: 'unknown error occurred' });
+      res
+        .status(500)
+        .json({ statusCode: 500, message: 'unknown error occurred' });
     }
   }
 });
@@ -55,12 +59,18 @@ app.post('/verify', async (req, res) => {
   const { client_id, token: jwt } = req.body;
   try {
     const valid = await token.verify(client_id, jwt);
-    res.json({ status: 'ok', valid });
+    if (valid) {
+      res.json({ success: true, message: 'Valid Token' });
+    } else {
+      res.status(403).json({ statusCode: 403, message: 'Invalid Token' });
+    }
   } catch (err) {
     if (/client/gi.test(err.message)) {
-      res.status(404).json({ status: 'client not found', valid: false });
+      res.status(403).json({ statusCode: 403, message: 'Invalid Token' });
+    } else if (/expired/gi.test(err.message)) {
+      res.status(400).json({ statusCode: 400, message: 'Token Expired' });
     } else {
-      res.json({ status: err.message, valid: false });
+      res.status(403).json({ statusCode: 403, message: 'Invalid Token' });
     }
   }
 });
@@ -81,6 +91,7 @@ process.on('SIGTERM', () => {
   db.close(err => {
     if (err) console.error('Could not close mongo');
   });
+  process.exit(0);
 });
 
 process.on('SIGINT', () => {
@@ -88,4 +99,5 @@ process.on('SIGINT', () => {
   db.close(err => {
     if (err) console.error('Could not close mongo');
   });
+  process.exit(0);
 });
